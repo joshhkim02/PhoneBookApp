@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace PhoneBookApp.Models
 {
-    public class Contact
+    public class Numbers
     {
+        public int NumberId { get; set; }
         public int ContactId { get; set; }
-        public string FirstName { get; set; } = null!;   // Setting to "null!" tells compiler this cannot be null
-        public string LastName { get; set; } = null!;
+        public int PhoneNumber { get; set; }
+        public string Description { get; set; }
     }
 }
