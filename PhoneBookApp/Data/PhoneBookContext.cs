@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PhoneBookApp.Data
 {
-    public class PhoneBookContext :DbContext
+    public class PhoneBookContext : DbContext
     {
         // Each DbSet maps to a table that will be created in the database
         public DbSet<Number> Numbers { get; set; } = null!;
