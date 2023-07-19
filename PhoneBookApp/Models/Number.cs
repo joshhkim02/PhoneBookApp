@@ -10,7 +10,7 @@ namespace PhoneBookApp.Models
     {
         public int NumberId { get; set; }
         public int ContactId { get; set; }
-        public int PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         public string Description { get; set; }
     }
 }
