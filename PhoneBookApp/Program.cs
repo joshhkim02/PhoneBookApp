@@ -1,22 +1,22 @@
 ﻿using PhoneBookApp.Data;
 using PhoneBookApp.Models;
 
-using PhoneBookContext context = new();
+using PhoneBookContext _context = new();
 
-Contact JohnDoe = new Contact()
+var contact = new Contact
 {
-    // ContactId will be 1
-    FirstName = "John",
-    LastName = "Doe"
+    FirstName = "Jane",
+    LastName = "Doe",
+    Numbers = new List<Number>()
+    {
+        new()
+        {
+            PhoneNumber = "132-492-9582",
+            Description = "Coworker"
+        }
+    }
 };
-context.Contacts.Add(JohnDoe);
 
-Number JDoe = new()
-{
-    ContactId = 1,
-    PhoneNumber = "313-3942-3013",
-    Description = "Co-worker"
-};
-context.Numbers.Add(JDoe);
+_context.Contacts.Add(contact);
+await _context.SaveChangesAsync();
 
-context.SaveChanges();
