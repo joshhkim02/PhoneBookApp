@@ -8,9 +8,9 @@ namespace PhoneBookApp.Models
 {
     public class Contact
     {
-        public int ContactId { get; set; }
+        public int Id { get; set; }
         public string FirstName { get; set; } = null!;   // Setting to "null!" tells compiler this cannot be null
         public string LastName { get; set; } = null!;
-        public List<Number> Numbers { get; set; }
+        public List<Number> Numbers { get; set; } = null!; // Navigation (collection) property
     }
 }

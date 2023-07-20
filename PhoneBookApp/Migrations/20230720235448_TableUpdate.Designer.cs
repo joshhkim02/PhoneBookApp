@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PhoneBookApp.Data;
 
@@ -10,9 +11,11 @@ using PhoneBookApp.Data;
 namespace PhoneBookApp.Migrations
 {
     [DbContext(typeof(PhoneBookContext))]
-    partial class PhoneBookContextModelSnapshot : ModelSnapshot
+    [Migration("20230720235448_TableUpdate")]
+    partial class TableUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,11 +47,11 @@ namespace PhoneBookApp.Migrations
 
             modelBuilder.Entity("PhoneBookApp.Models.Number", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("NumberId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NumberId"));
 
                     b.Property<int>("ContactId")
                         .HasColumnType("int");
@@ -60,7 +63,7 @@ namespace PhoneBookApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("NumberId");
 
                     b.HasIndex("ContactId");
 
