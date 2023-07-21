@@ -1,4 +1,5 @@
-﻿using PhoneBookApp.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using PhoneBookApp.Data;
 using PhoneBookApp.Models;
 using System;
 using System.Collections.Generic;
@@ -61,6 +62,50 @@ namespace PhoneBookApp
                 Console.WriteLine($"Description: {numbers[i].Description}\n");
             }
             Console.WriteLine("-----------------------------------------");
+        }
+
+        public async void updateContact()
+        {
+            using PhoneBookContext _context = new();
+            int intId;
+
+            Console.WriteLine("Enter in the ID of the contact you would like to edit.");
+            var userId = Console.ReadLine();
+
+            bool result = int.TryParse(userId, out intId);
+
+            while (result == false)
+            {
+                Console.WriteLine("Please enter in a valid number.");
+                userId = Console.ReadLine();
+                result = int.TryParse(userId, out intId);
+            }
+
+            Console.WriteLine("\nEnter in the first name of the contact:");
+            var newFirstName = Console.ReadLine();
+
+            Console.WriteLine("\nEnter in the last name of the contact: ");
+            var newLastName = Console.ReadLine();
+
+            Console.WriteLine("\nEnter in the phone number of the contact: ");
+            var newPhoneNumber = Console.ReadLine();
+
+            Console.WriteLine("\nOPTIONAL: Enter in a description for the contact:");
+            var newDescription = Console.ReadLine();
+
+            await _context.Contacts
+                .Where(c => c.Id == intId)
+                .ExecuteUpdateAsync(s => s
+                    .SetProperty(c => c.FirstName, c => newFirstName)
+                    .SetProperty(c => c.LastName, c => newLastName));
+
+            await _context.Numbers
+                .Where(n => n.Id == intId)
+                .ExecuteUpdateAsync(s => s
+                    .SetProperty(n => n.PhoneNumber, n => newPhoneNumber)
+                    .SetProperty(n => n.Description, n => newDescription));
+
+            await _context.SaveChangesAsync();
         }
     }
 }
