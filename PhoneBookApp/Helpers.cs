@@ -23,7 +23,7 @@ namespace PhoneBookApp
             Console.WriteLine("Enter in the phone number of the contact: ");
             var phoneNumber = Console.ReadLine();
 
-            Console.WriteLine("OPTIONAL: Enter in a description for the number:");
+            Console.WriteLine("OPTIONAL: Enter in a description for the contact:");
             var description = Console.ReadLine();
 
             var contact = new Contact
@@ -41,6 +41,26 @@ namespace PhoneBookApp
             };
             _context.Contacts.Add(contact);
             await _context.SaveChangesAsync();
+        }
+
+        public void showContacts()
+        {
+            using PhoneBookContext _context = new();
+
+            var contacts = _context.Contacts.ToList();
+
+            var numbers = _context.Numbers.ToList();
+
+            Console.Clear();
+            Console.WriteLine("-----------------------------------------");
+            for (int i = 0; i < contacts.Count; i++)
+            {
+                Console.WriteLine($"Contact ID: {contacts[i].Id}");
+                Console.WriteLine($"Name: {contacts[i].FirstName} {contacts[i].LastName}");
+                Console.WriteLine($"Phone number: {numbers[i].PhoneNumber}");
+                Console.WriteLine($"Description: {numbers[i].Description}\n");
+            }
+            Console.WriteLine("-----------------------------------------");
         }
     }
 }

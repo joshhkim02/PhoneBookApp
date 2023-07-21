@@ -29,11 +29,12 @@ namespace PhoneBookApp
                 switch (userChoice)
                 {
                     case "1":
-                        Console.WriteLine("Adding new contact...");
                         helpers.addContact();
                         break;
                     case "2":
-                        Console.WriteLine("Viewing existing contacts...");
+                        helpers.showContacts();
+                        Console.WriteLine("Enter any key to go back to the main menu.");
+                        Console.ReadLine();
                         break;
                     case "3":
                         Console.WriteLine("Updating existing contact...");
