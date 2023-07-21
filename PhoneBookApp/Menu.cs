@@ -8,6 +8,7 @@ namespace PhoneBookApp
 {
     internal class Menu
     {
+        Helpers helpers = new();
         internal void showMenu()
         {
             bool closeApp = false;
@@ -29,6 +30,7 @@ namespace PhoneBookApp
                 {
                     case "1":
                         Console.WriteLine("Adding new contact...");
+                        helpers.addContact();
                         break;
                     case "2":
                         Console.WriteLine("Viewing existing contacts...");
