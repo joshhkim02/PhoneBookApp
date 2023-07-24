@@ -11,7 +11,7 @@ namespace PhoneBookApp
 {
     internal class Helpers
     {
-        public async void addContact()
+        internal void addContact()
         {
             using PhoneBookContext _context = new();
 
@@ -41,10 +41,10 @@ namespace PhoneBookApp
                 }
             };
             _context.Contacts.Add(contact);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
-        public void showContacts()
+        internal void showContacts()
         {
             Console.Clear();
             using PhoneBookContext _context = new();
@@ -67,7 +67,7 @@ namespace PhoneBookApp
             Console.WriteLine("-----------------------------------------");
         }
 
-        public async void updateContact()
+        internal void updateContact()
         {
             using PhoneBookContext _context = new();
             int intId;
@@ -96,20 +96,20 @@ namespace PhoneBookApp
             Console.WriteLine("\nOPTIONAL: Enter in a description for the contact:");
             var newDescription = Console.ReadLine();
 
-            var query1 = await _context.Contacts
+            var query1 = _context.Contacts
                 .Where(c => c.Id == intId)
-                .ExecuteUpdateAsync(s => s
+                .ExecuteUpdate(s => s
                     .SetProperty(c => c.FirstName, c => newFirstName)
                     .SetProperty(c => c.LastName, c => newLastName));
 
-           var query2 = await _context.Numbers
+           var query2 = _context.Numbers
                 .Where(n => n.Id == intId)
-                .ExecuteUpdateAsync(s => s
+                .ExecuteUpdate(s => s
                     .SetProperty(n => n.PhoneNumber, n => newPhoneNumber)
                     .SetProperty(n => n.Description, n => newDescription));
         }
 
-        public async void deleteContact()
+        internal void deleteContact()
         {
             using PhoneBookContext _context = new();
             int intId;
@@ -127,7 +127,7 @@ namespace PhoneBookApp
             }
 
             // Using ExecuteDelete is easier than having to manually remove the blog and save the changes, ExecuteDelete does it in one line
-            var delete = await _context.Contacts.Where(c => c.Id == intId).ExecuteDeleteAsync();
+            var delete = _context.Contacts.Where(c => c.Id == intId).ExecuteDelete();
         }
     }
 }
