@@ -51,7 +51,6 @@ namespace PhoneBookApp
                     default:
                         Console.WriteLine("Invalid input. Enter any key to try again.");
                         Console.ReadLine();
-                        showMenu();
                         break;
                 }
             }

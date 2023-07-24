@@ -96,13 +96,13 @@ namespace PhoneBookApp
             Console.WriteLine("\nOPTIONAL: Enter in a description for the contact:");
             var newDescription = Console.ReadLine();
 
-            var query1 = _context.Contacts
+           _context.Contacts
                 .Where(c => c.Id == intId)
                 .ExecuteUpdate(s => s
                     .SetProperty(c => c.FirstName, c => newFirstName)
                     .SetProperty(c => c.LastName, c => newLastName));
 
-           var query2 = _context.Numbers
+           _context.Numbers
                 .Where(n => n.Id == intId)
                 .ExecuteUpdate(s => s
                     .SetProperty(n => n.PhoneNumber, n => newPhoneNumber)
@@ -127,7 +127,7 @@ namespace PhoneBookApp
             }
 
             // Using ExecuteDelete is easier than having to manually remove the blog and save the changes, ExecuteDelete does it in one line
-            var delete = _context.Contacts.Where(c => c.Id == intId).ExecuteDelete();
+            _context.Contacts.Where(c => c.Id == intId).ExecuteDelete();
         }
     }
 }
