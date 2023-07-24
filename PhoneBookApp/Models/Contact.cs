@@ -11,6 +11,11 @@ namespace PhoneBookApp.Models
         public int Id { get; set; }
         public string FirstName { get; set; } = null!;   // Setting to "null!" tells compiler this cannot be null
         public string LastName { get; set; } = null!;
-        public List<Number> Numbers { get; set; } = null!; // Navigation (collection) property
+
+        
+        /* When creating a relationship between entities, can use ICollection<T> and it will take anything that implements ICollection<T>.
+        Therefore, we can use List<T> or HashSet<T> depending on what our data will look like because they both implement the methods from
+        ICollection<T> */
+        public List<Number> Numbers { get; set; } // Navigation (collection) property
     }
 }

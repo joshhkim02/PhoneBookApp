@@ -46,20 +46,22 @@ namespace PhoneBookApp
 
         public void showContacts()
         {
+            Console.Clear();
             using PhoneBookContext _context = new();
 
-            var contacts = _context.Contacts.ToList();
+            // Include the Numbers property (List type) from model so we can access it 
+            var contacts = _context.Contacts.Include(contact => contact.Numbers).ToList();
 
-            var numbers = _context.Numbers.ToList();
-
-            Console.Clear();
             Console.WriteLine("-----------------------------------------");
-            for (int i = 0; i < contacts.Count; i++)
+            foreach (var contact in contacts)
             {
-                Console.WriteLine($"Contact ID: {contacts[i].Id}");
-                Console.WriteLine($"Name: {contacts[i].FirstName} {contacts[i].LastName}");
-                Console.WriteLine($"Phone number: {numbers[i].PhoneNumber}");
-                Console.WriteLine($"Description: {numbers[i].Description}\n");
+                Console.WriteLine($"Contact ID: {contact.Id}");
+                Console.WriteLine($"Name: {contact.FirstName} {contact.LastName}");
+                foreach (var num in contact.Numbers)
+                {
+                    Console.WriteLine($"Phone number: {num.PhoneNumber}");
+                    Console.WriteLine($"Description: {num.Description}\n");
+                }
             }
             Console.WriteLine("-----------------------------------------");
         }
@@ -93,19 +95,17 @@ namespace PhoneBookApp
             Console.WriteLine("\nOPTIONAL: Enter in a description for the contact:");
             var newDescription = Console.ReadLine();
 
-            await _context.Contacts
+            var query1 = await _context.Contacts
                 .Where(c => c.Id == intId)
                 .ExecuteUpdateAsync(s => s
                     .SetProperty(c => c.FirstName, c => newFirstName)
                     .SetProperty(c => c.LastName, c => newLastName));
 
-            await _context.Numbers
+           var query2 = await _context.Numbers
                 .Where(n => n.Id == intId)
                 .ExecuteUpdateAsync(s => s
                     .SetProperty(n => n.PhoneNumber, n => newPhoneNumber)
                     .SetProperty(n => n.Description, n => newDescription));
-
-            await _context.SaveChangesAsync();
         }
     }
 }
