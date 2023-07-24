@@ -57,6 +57,7 @@ namespace PhoneBookApp
             {
                 Console.WriteLine($"Contact ID: {contact.Id}");
                 Console.WriteLine($"Name: {contact.FirstName} {contact.LastName}");
+                // We access phone number and description through the Numbers property in contact
                 foreach (var num in contact.Numbers)
                 {
                     Console.WriteLine($"Phone number: {num.PhoneNumber}");
@@ -106,6 +107,27 @@ namespace PhoneBookApp
                 .ExecuteUpdateAsync(s => s
                     .SetProperty(n => n.PhoneNumber, n => newPhoneNumber)
                     .SetProperty(n => n.Description, n => newDescription));
+        }
+
+        public async void deleteContact()
+        {
+            using PhoneBookContext _context = new();
+            int intId;
+
+            Console.WriteLine("Enter in the ID of the contact you would like to delete.");
+            var userId = Console.ReadLine();
+
+            bool result = int.TryParse(userId, out intId);
+
+            while (result == false)
+            {
+                Console.WriteLine("Please enter in a valid number.");
+                userId = Console.ReadLine();
+                result = int.TryParse(userId, out intId);
+            }
+
+            // Using ExecuteDelete is easier than having to manually remove the blog and save the changes, ExecuteDelete does it in one line
+            var delete = await _context.Contacts.Where(c => c.Id == intId).ExecuteDeleteAsync();
         }
     }
 }

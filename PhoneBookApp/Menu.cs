@@ -41,7 +41,8 @@ namespace PhoneBookApp
                         helpers.updateContact();
                         break;
                     case "4":
-                        Console.WriteLine("Deleting contact...");
+                        helpers.showContacts();
+                        helpers.deleteContact();
                         break;
                     case "5":
                         Console.WriteLine("Exiting application...");
