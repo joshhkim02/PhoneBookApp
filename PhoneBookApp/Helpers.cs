@@ -74,29 +74,17 @@ namespace PhoneBookApp
                 result = int.TryParse(userId, out intId);
             }
 
-            Console.WriteLine("\nEnter in the first name of the contact:");
-            var newFirstName = Console.ReadLine();
-
-            Console.WriteLine("\nEnter in the last name of the contact: ");
-            var newLastName = Console.ReadLine();
-
-            Console.WriteLine("\nEnter in the phone number of the contact: ");
-            var newPhoneNumber = Console.ReadLine();
-
-            Console.WriteLine("\nOPTIONAL: Enter in a description for the contact:");
-            var newDescription = Console.ReadLine();
-
            _context.Contacts
                 .Where(c => c.Id == intId)
                 .ExecuteUpdate(s => s
-                    .SetProperty(c => c.FirstName, c => newFirstName)
-                    .SetProperty(c => c.LastName, c => newLastName));
+                    .SetProperty(c => c.FirstName, c => input.getFirstName())
+                    .SetProperty(c => c.LastName, c => input.getLastName()));
 
            _context.Numbers
                 .Where(n => n.Id == intId)
                 .ExecuteUpdate(s => s
-                    .SetProperty(n => n.PhoneNumber, n => newPhoneNumber)
-                    .SetProperty(n => n.Description, n => newDescription));
+                    .SetProperty(n => n.PhoneNumber, n => input.getPhone())
+                    .SetProperty(n => n.Description, n => input.getDescription()));
         }
 
         internal void deleteContact()

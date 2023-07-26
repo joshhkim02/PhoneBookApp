@@ -22,5 +22,19 @@ namespace PhoneBookApp
             var lastName = Console.ReadLine();
             return lastName;
         }
+
+        internal string getPhone()
+        {
+            Console.WriteLine("Enter in the phone number of the contact: ");
+            var phoneNumber = Console.ReadLine();
+            return phoneNumber;
+        }
+
+        internal string getDescription()
+        {
+            Console.WriteLine("OPTIONAL: Enter in a description for the contact:");
+            var description = Console.ReadLine();
+            return description;
+        }
     }
 }
