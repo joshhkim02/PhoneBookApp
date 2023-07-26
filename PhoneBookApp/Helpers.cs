@@ -62,16 +62,15 @@ namespace PhoneBookApp
             using PhoneBookContext _context = new();
             int intId;
 
-            Console.WriteLine("Enter in the ID of the contact you would like to edit.");
-            var userId = Console.ReadLine();
+            var userInput = input.getUserId();
 
-            bool result = int.TryParse(userId, out intId);
+            bool result = int.TryParse(userInput, out intId);
 
             while (result == false)
             {
                 Console.WriteLine("Please enter in a valid number.");
-                userId = Console.ReadLine();
-                result = int.TryParse(userId, out intId);
+                userInput = input.getUserId();
+                result = int.TryParse(userInput, out intId);
             }
 
            _context.Contacts

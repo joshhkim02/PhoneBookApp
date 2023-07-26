@@ -36,5 +36,12 @@ namespace PhoneBookApp
             var description = Console.ReadLine();
             return description;
         }
+
+        internal string getUserId()
+        {
+            Console.WriteLine("Enter in the ID of the contact you would like to edit.");
+            var userId = Console.ReadLine();
+            return userId;
+        }
     }
 }
