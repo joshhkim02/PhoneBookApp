@@ -43,5 +43,26 @@ namespace PhoneBookApp
             var userId = Console.ReadLine();
             return userId;
         }
+
+        internal string deleteId()
+        {
+            Console.WriteLine("Enter in the ID of the contact you would like to delete.");
+            var userId = Console.ReadLine();
+            return userId;
+        }
+
+        internal int validateInput(string input)
+        {
+            int intId;
+            bool result = int.TryParse(input, out intId);
+
+            while (result == false)
+            {
+                Console.WriteLine("Please enter in a valid number.");
+                input = getUserId();
+                result = int.TryParse(input, out intId);
+            }
+            return intId;
+        }
     }
 }

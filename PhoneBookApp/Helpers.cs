@@ -60,18 +60,9 @@ namespace PhoneBookApp
         internal void updateContact()
         {
             using PhoneBookContext _context = new();
-            int intId;
 
             var userInput = input.getUserId();
-
-            bool result = int.TryParse(userInput, out intId);
-
-            while (result == false)
-            {
-                Console.WriteLine("Please enter in a valid number.");
-                userInput = input.getUserId();
-                result = int.TryParse(userInput, out intId);
-            }
+            var intId = input.validateInput(userInput);
 
            _context.Contacts
                 .Where(c => c.Id == intId)
@@ -89,19 +80,8 @@ namespace PhoneBookApp
         internal void deleteContact()
         {
             using PhoneBookContext _context = new();
-            int intId;
-
-            Console.WriteLine("Enter in the ID of the contact you would like to delete.");
-            var userId = Console.ReadLine();
-
-            bool result = int.TryParse(userId, out intId);
-
-            while (result == false)
-            {
-                Console.WriteLine("Please enter in a valid number.");
-                userId = Console.ReadLine();
-                result = int.TryParse(userId, out intId);
-            }
+            var userInput = input.deleteId();
+            var intId = input.validateInput(userInput);
 
             // Using ExecuteDelete is easier than having to manually remove the blog and save the changes, ExecuteDelete does it in one line
             _context.Contacts.Where(c => c.Id == intId).ExecuteDelete();
