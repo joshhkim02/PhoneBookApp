@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PhoneBookApp.Data;
 using PhoneBookApp.Models;
+using PhoneBookApp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,34 +12,23 @@ namespace PhoneBookApp
 {
     internal class Helpers
     {
+        userInput input = new();
         internal void addContact()
         {
             using PhoneBookContext _context = new();
 
-            Console.WriteLine("Enter in the first name of the contact:");
-            var firstName = Console.ReadLine();
-
-            Console.WriteLine("Enter in the last name of the contact: ");
-            var lastName = Console.ReadLine();
-
-            Console.WriteLine("Enter in the phone number of the contact: ");
-            var phoneNumber = Console.ReadLine();
-
-            Console.WriteLine("OPTIONAL: Enter in a description for the contact:");
-            var description = Console.ReadLine();
-
             var contact = new Contact
             {
-                FirstName = firstName,
-                LastName = lastName,
+                FirstName = input.getFirstName(),
+                LastName = input.getLastName(),
                 Numbers = new List<Number>()
                 {
                     new()
                     {
-                        PhoneNumber = phoneNumber,
-                        Description = description
+                        PhoneNumber = input.getPhone(),
+                        Description = input.getDescription(),
                     }
-                }
+                }   
             };
             _context.Contacts.Add(contact);
             _context.SaveChanges();
