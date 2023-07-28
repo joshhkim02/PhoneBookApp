@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace PhoneBookApp
 {
-    internal class Menu
+    public class Menu
     {
         Helpers helpers = new();
-        internal void showMenu()
+        public void ShowMenu()
         {
             bool closeApp = false;
             while (closeApp == false)
@@ -29,20 +29,20 @@ namespace PhoneBookApp
                 switch (userChoice)
                 {
                     case "1":
-                        helpers.addContact();
+                        helpers.AddContact();
                         break;
                     case "2":
-                        helpers.showContacts();
+                        helpers.ShowContacts();
                         Console.WriteLine("Enter any key to go back to the main menu.");
                         Console.ReadLine();
                         break;
                     case "3":
-                        helpers.showContacts();
-                        helpers.updateContact();
+                        helpers.ShowContacts();
+                        helpers.UpdateContact();
                         break;
                     case "4":
-                        helpers.showContacts();
-                        helpers.deleteContact();
+                        helpers.ShowContacts();
+                        helpers.DeleteContact();
                         break;
                     case "5":
                         Console.WriteLine("Exiting application...");

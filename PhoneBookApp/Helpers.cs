@@ -10,24 +10,24 @@ using System.Threading.Tasks;
 
 namespace PhoneBookApp
 {
-    internal class Helpers
+    public class Helpers
     {
-        userInput input = new();
+        UserInput input = new();
         Validate validate = new();
-        internal void addContact()
+        public void AddContact()
         {
             using PhoneBookContext _context = new();
 
             var contact = new Contact
             {
-                FirstName = input.getFirstName(),
-                LastName = input.getLastName(),
+                FirstName = input.GetFirstName(),
+                LastName = input.GetLastName(),
                 Numbers = new List<Number>()
                 {
                     new()
                     {
-                        PhoneNumber = input.getPhone(),
-                        Description = input.getDescription(),
+                        PhoneNumber = input.GetPhone(),
+                        Description = input.GetDescription(),
                     }
                 }   
             };
@@ -35,7 +35,7 @@ namespace PhoneBookApp
             _context.SaveChanges();
         }
 
-        internal void showContacts()
+        public void ShowContacts()
         {
             Console.Clear();
             using PhoneBookContext _context = new();
@@ -58,36 +58,41 @@ namespace PhoneBookApp
             Console.WriteLine("-----------------------------------------");
         }
 
-        internal void updateContact()
+        public void UpdateContact()
         {
             using PhoneBookContext _context = new();
 
-            var userInput = input.getUserId();
+            var userInput = input.GetUserId();
             var intId = validate.IdInput(userInput);
 
            _context.Contacts
                 .Where(c => c.Id == intId)
                 .ExecuteUpdate(s => s
-                    .SetProperty(c => c.FirstName, c => input.getFirstName())
-                    .SetProperty(c => c.LastName, c => input.getLastName()));
+                    .SetProperty(c => c.FirstName, c => input.GetFirstName())
+                    .SetProperty(c => c.LastName, c => input.GetLastName()));
 
            _context.Numbers
                 .Where(n => n.Id == intId)
                 .ExecuteUpdate(s => s
-                    .SetProperty(n => n.PhoneNumber, n => input.getPhone())
-                    .SetProperty(n => n.Description, n => input.getDescription()));
+                    .SetProperty(n => n.PhoneNumber, n => input.GetPhone())
+                    .SetProperty(n => n.Description, n => input.GetDescription()));
         }
 
-        internal void deleteContact()
+        public void DeleteContact()
         {
             using PhoneBookContext _context = new();
 
-            var userInput = input.getDeleteId();
+            var userInput = input.GetDeleteId();
             var intId = validate.IdInput(userInput);
-            validate.IdExists(intId);
 
             // Using ExecuteDelete is easier than having to manually remove the blog and save the changes, ExecuteDelete does it in one line
-            _context.Contacts.Where(c => c.Id == intId).ExecuteDelete();
+            var result = _context.Contacts.Where(c => c.Id == intId).ExecuteDelete();
+            if (result == 0)
+            {
+                Console.WriteLine("Id does not exist.");
+            }
+            else Console.WriteLine("Id was successfully deleted.");
+
         }
     }
 }

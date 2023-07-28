@@ -9,7 +9,7 @@ namespace PhoneBookApp
 {
     public class Validate
     {
-        userInput user = new();
+        UserInput user = new();
         public int IdInput(string input)
         {
             int intId;
