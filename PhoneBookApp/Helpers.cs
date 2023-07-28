@@ -13,6 +13,7 @@ namespace PhoneBookApp
     internal class Helpers
     {
         userInput input = new();
+        Validate validate = new();
         internal void addContact()
         {
             using PhoneBookContext _context = new();
@@ -62,7 +63,7 @@ namespace PhoneBookApp
             using PhoneBookContext _context = new();
 
             var userInput = input.getUserId();
-            var intId = input.validateInput(userInput);
+            var intId = validate.IdInput(userInput);
 
            _context.Contacts
                 .Where(c => c.Id == intId)
@@ -80,8 +81,9 @@ namespace PhoneBookApp
         internal void deleteContact()
         {
             using PhoneBookContext _context = new();
-            var userInput = input.deleteId();
-            var intId = input.validateInput(userInput);
+            var userInput = input.getDeleteId();
+            var intId = validate.IdInput(userInput);
+            validate.IdExists(intId);
 
             // Using ExecuteDelete is easier than having to manually remove the blog and save the changes, ExecuteDelete does it in one line
             _context.Contacts.Where(c => c.Id == intId).ExecuteDelete();
