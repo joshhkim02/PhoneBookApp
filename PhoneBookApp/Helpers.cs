@@ -81,6 +81,7 @@ namespace PhoneBookApp
         internal void deleteContact()
         {
             using PhoneBookContext _context = new();
+
             var userInput = input.getDeleteId();
             var intId = validate.IdInput(userInput);
             validate.IdExists(intId);

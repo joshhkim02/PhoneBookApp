@@ -17,7 +17,7 @@ namespace PhoneBookApp
 
             if (result == false)
             {
-                Console.WriteLine("Input is invalid. Enter any key to try again.");
+                Console.WriteLine("Input is invalid. Enter any key to go back to the main menu.");
                 Console.ReadLine();
             }
             return intId;
@@ -26,11 +26,16 @@ namespace PhoneBookApp
         public void IdExists(int input)
         {
             using PhoneBookContext _context = new();
-            bool doesExist;
 
-            _context.Contacts.Where(c => c.Id == input);
+            // Get the number of rows returned from select query
+            var rowsReturned = _context.Contacts.Where(c => c.Id == input).Count();
 
-
+            // if rowsReturned = 0, then that means there were no hits with the query
+            if (rowsReturned == 0)
+            {
+                Console.WriteLine("Id does not exist. Enter any key to go back to the main menu.");
+                Console.ReadLine();
+            }
         }
         
         public void FirstName(string input)
