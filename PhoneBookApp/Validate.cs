@@ -23,24 +23,5 @@ namespace PhoneBookApp
             return intId;
         }
 
-        public void IdExists(int input)
-        {
-            using PhoneBookContext _context = new();
-
-            // Get the number of rows returned from select query
-            var rowsReturned = _context.Contacts.Where(c => c.Id == input).Count();
-
-            // if rowsReturned = 0, then that means there were no hits with the query
-            if (rowsReturned == 0)
-            {
-                Console.WriteLine("Id does not exist. Enter any key to go back to the main menu.");
-                Console.ReadLine();
-            }
-        }
-        
-        public void FirstName(string input)
-        {
-            
-        }
     }
 }
