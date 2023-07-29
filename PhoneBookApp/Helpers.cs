@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PhoneBookApp
 {
-    public class Helpers
+    public class Helpers : IHelpers
     {
         UserInput input = new();
         Validate validate = new();
