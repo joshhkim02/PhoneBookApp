@@ -9,7 +9,6 @@ namespace PhoneBookApp
 {
     public class Validate
     {
-        UserInput user = new();
         public int IdInput(string input)
         {
             int intId;
@@ -23,5 +22,15 @@ namespace PhoneBookApp
             return intId;
         }
 
+        //public bool NameInput(string input)
+        //{
+        //    bool result = input.All(Char.IsLetter);
+        //    if (result == false)
+        //    {
+        //        Console.WriteLine("Please only enter letters. Enter any key to try again.");
+        //        Console.ReadLine();
+        //    }
+        //    return result;
+        //}
     }
 }

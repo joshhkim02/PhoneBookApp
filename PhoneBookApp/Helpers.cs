@@ -16,6 +16,7 @@ namespace PhoneBookApp
         Validate validate = new();
         public void AddContact()
         {
+            Console.Clear();
             using PhoneBookContext _context = new();
 
             var contact = new Contact
@@ -91,8 +92,8 @@ namespace PhoneBookApp
             {
                 Console.WriteLine("Id does not exist.");
             }
-            else Console.WriteLine("Id was successfully deleted.");
-
+            else Console.WriteLine("Id was successfully deleted. Enter any key to go back to the main menu.");
+            Console.ReadLine();
         }
     }
 }
