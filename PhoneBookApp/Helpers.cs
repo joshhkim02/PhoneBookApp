@@ -12,23 +12,28 @@ namespace PhoneBookApp
 {
     public class Helpers
     {
-        UserInput input = new();
-        Validate validate = new();
+        private readonly PhoneBookContext _context;
+        public Helpers(PhoneBookContext phoneBookContext) => _context = phoneBookContext;
+
+        private readonly UserInput _input;
+        public Helpers(UserInput input) => _input = input;
+
+        private readonly Validate _validate;
+        public Helpers(Validate validate) => _validate = validate;
+
         public void AddContact()
         {
             Console.Clear();
-            using PhoneBookContext _context = new();
-
             var contact = new Contact
             {
-                FirstName = input.GetFirstName(),
-                LastName = input.GetLastName(),
+                FirstName = _input.GetFirstName(),
+                LastName = _input.GetLastName(),
                 Numbers = new List<Number>()
                 {
                     new()
                     {
-                        PhoneNumber = input.GetPhone(),
-                        Description = input.GetDescription(),
+                        PhoneNumber = _input.GetPhone(),
+                        Description = _input.GetDescription(),
                     }
                 }   
             };
@@ -39,8 +44,6 @@ namespace PhoneBookApp
         public void ShowContacts()
         {
             Console.Clear();
-            using PhoneBookContext _context = new();
-
             // Include the Numbers property (List type) from model so we can access it 
             var contacts = _context.Contacts.Include(contact => contact.Numbers).ToList();
 
@@ -61,30 +64,26 @@ namespace PhoneBookApp
 
         public void UpdateContact()
         {
-            using PhoneBookContext _context = new();
-
-            var userInput = input.GetUserId();
-            var intId = validate.IdInput(userInput);
+            var userInput = _input.GetUserId();
+            var intId = _validate.IdInput(userInput);
 
            _context.Contacts
                 .Where(c => c.Id == intId)
                 .ExecuteUpdate(s => s
-                    .SetProperty(c => c.FirstName, c => input.GetFirstName())
-                    .SetProperty(c => c.LastName, c => input.GetLastName()));
+                    .SetProperty(c => c.FirstName, c => _input.GetFirstName())
+                    .SetProperty(c => c.LastName, c => _input.GetLastName()));
 
            _context.Numbers
                 .Where(n => n.Id == intId)
                 .ExecuteUpdate(s => s
-                    .SetProperty(n => n.PhoneNumber, n => input.GetPhone())
-                    .SetProperty(n => n.Description, n => input.GetDescription()));
+                    .SetProperty(n => n.PhoneNumber, n => _input.GetPhone())
+                    .SetProperty(n => n.Description, n => _input.GetDescription()));
         }
 
         public void DeleteContact()
         {
-            using PhoneBookContext _context = new();
-
-            var userInput = input.GetDeleteId();
-            var intId = validate.IdInput(userInput);
+            var userInput = _input.GetDeleteId();
+            var intId = _validate.IdInput(userInput);
 
             // Using ExecuteDelete is easier than having to manually remove the blog and save the changes, ExecuteDelete does it in one line
             var result = _context.Contacts.Where(c => c.Id == intId).ExecuteDelete();

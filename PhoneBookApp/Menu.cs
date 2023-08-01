@@ -8,7 +8,8 @@ namespace PhoneBookApp
 {
     public class Menu
     {
-        Helpers helpers = new();
+        private readonly Helpers _helpers;
+        public Menu(Helpers helpers) => _helpers = helpers;
         public void ShowMenu()
         {
             bool closeApp = false;
@@ -29,20 +30,20 @@ namespace PhoneBookApp
                 switch (userChoice)
                 {
                     case "1":
-                        helpers.AddContact();
+                        _helpers.AddContact();
                         break;
                     case "2":
-                        helpers.ShowContacts();
+                        _helpers.ShowContacts();
                         Console.WriteLine("Enter any key to go back to the main menu.");
                         Console.ReadLine();
                         break;
                     case "3":
-                        helpers.ShowContacts();
-                        helpers.UpdateContact();
+                        _helpers.ShowContacts();
+                        _helpers.UpdateContact();
                         break;
                     case "4":
-                        helpers.ShowContacts();
-                        helpers.DeleteContact();
+                        _helpers.ShowContacts();
+                        _helpers.DeleteContact();
                         break;
                     case "5":
                         Console.WriteLine("Exiting application...");
