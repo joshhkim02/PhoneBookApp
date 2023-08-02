@@ -12,17 +12,22 @@ namespace PhoneBookApp
 {
     public class Helpers
     {
-        private readonly PhoneBookContext _context;
-        public Helpers(PhoneBookContext phoneBookContext) => _context = phoneBookContext;
+        /* In this case, the DBContext is NOT injected as it is a transient service. The Helpers class has been added as a singleton in Program.cs,
+           so by injecting the DBContext into this class, DBContext loses its transient property and is 'promoted' into a singleton. As a reuslt,
+           the new instance is only going to be created once. */
 
         private readonly UserInput _input;
-        public Helpers(UserInput input) => _input = input;
-
         private readonly Validate _validate;
-        public Helpers(Validate validate) => _validate = validate;
+        public Helpers(UserInput input, Validate validate)
+        {
+            _input = input;
+            _validate = validate;
+        }
 
         public void AddContact()
         {
+            // We have a new using statement for every method that uses the context for reasons mentioned above and since EF Core supports lightweight transactions
+            using PhoneBookContext _context = new();
             Console.Clear();
             var contact = new Contact
             {
@@ -43,6 +48,7 @@ namespace PhoneBookApp
 
         public void ShowContacts()
         {
+            using PhoneBookContext _context = new();
             Console.Clear();
             // Include the Numbers property (List type) from model so we can access it 
             var contacts = _context.Contacts.Include(contact => contact.Numbers).ToList();
@@ -64,6 +70,7 @@ namespace PhoneBookApp
 
         public void UpdateContact()
         {
+            using PhoneBookContext _context = new();
             var userInput = _input.GetUserId();
             var intId = _validate.IdInput(userInput);
 
@@ -82,6 +89,7 @@ namespace PhoneBookApp
 
         public void DeleteContact()
         {
+            using PhoneBookContext _context = new();
             var userInput = _input.GetDeleteId();
             var intId = _validate.IdInput(userInput);
 
